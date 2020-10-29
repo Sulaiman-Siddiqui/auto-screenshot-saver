@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+def scrnsht():
+    from pyautogui import screenshot
+    import datetime
+    import os
+
+    #time and day
+    today = str(datetime.datetime.now())
+
+
+    #time
+    timetry = today[11:17]
+    time = str()
+    for c in range(len(timetry)):
+        if timetry[c] != ':':
+            time = time + timetry[c]
+    time = int(time)
+
+    #filedate:
+    filedate = str()
+    for x in range(10):
+        if today[x] != '-':
+            filedate = filedate + today[x] 
+    
+    #filesubject
+    if time > 845 and time < 941:
+        subject = 'PHY'
+    if time > 941 and time < 1039:
+        subject = 'FUR'
+    if time > 1220 and time < 1325:
+        subject = 'MTH'
+    else:
+        subject = 'OTHER'
+
+    #screenshot
+    pic = screenshot()
+ 
+    #create fldr or add and then save
+    fileFolder = "C:\\Users\\sulai\\Documents\\Nixor A2\\" + subject + '\\' + filedate
+    if os.path.isdir(fileFolder):
+        pic.save(fileFolder + "\\" + str(len(os.listdir(fileFolder)) + 1) + '.png')
+    else:
+        os.mkdir(fileFolder)
+        pic.save(fileFolder + "\\" + str(len(os.listdir(fileFolder)) + 1) + '.png')
+				
+scrnsht()
